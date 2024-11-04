@@ -1,3 +1,5 @@
+from cryptography.exceptions import InvalidTag
+
 from encryption_decryption_interface import EncryptionDecryptionInterface
 from rc4_algorithm import RC4Algorithm
 from aes_algorithm import AESAlgorithm
@@ -72,7 +74,7 @@ class Connector:
             try:
                 decrypted_bytes = self.algorithm[2].decrypt_bytes(encrypted_keys, file[1][self.TECHNICAL_INFO_LENGTH:], password)
             except Exception as e:
-                errors += str(e) + "\n"
+                errors +="Invalid password\n"
                 continue
             decrypted_files.append([new_file_name,decrypted_bytes])
 
