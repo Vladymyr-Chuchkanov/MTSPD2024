@@ -1,8 +1,7 @@
 import unittest
-from unittest.mock import MagicMock, patch
 import string
 import random
-from user_interface import generate_strong_password
+import os
 from connector import Connector
 import logging
 logging.basicConfig(level=logging.DEBUG)
@@ -30,8 +29,24 @@ class TestConnectorEncryptionDecryption(unittest.TestCase):
 
         self.assertEqual(decrypt_errors, "", f"Decryption errors occurred: {decrypt_errors}")
         self.assertTrue(len(decrypted_files) > 0, "No files were decrypted.")
-
-
         original_data = self.test_file_data[0][1]
         decrypted_data = decrypted_files[0][1]
         self.assertEqual(original_data, decrypted_data, "Decrypted data does not match the original data.")
+
+    def test_encrypt_files(self):
+        folder_path = "algorithms_history/"
+        files = [f for f in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, f)) and f.endswith(".bin")]
+        connector = Connector()
+        for file in files:
+            file_path = os.path.join(folder_path, file)
+            try:
+                with open(file_path, "rb") as file1:
+                    file_bytes = file1.read()
+                err, dec_files = connector.decrypt_files([[file_path, file_bytes]], '')
+                self.assertGreater(len(dec_files), 0, f"Decryption result for {file} is empty.")
+            except Exception as e:
+                self.fail(f"Error during decryption {file}: {str(e)} with algorithm "+str(connector.algorithm))
+
+
+if __name__ == '__main__':
+    unittest.main()
