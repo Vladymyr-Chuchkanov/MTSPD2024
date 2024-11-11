@@ -1,12 +1,12 @@
 from algorithms.rc4_algorithm import RC4Algorithm
 from algorithms.aes_algorithm import AESAlgorithm
-from algorithms.aes_algorithm_v1 import AESAlgorithmV1
+#from algorithms.aes_algorithm_v1 import AESAlgorithmV1
 
 
 class Connector:
     def __init__(self):
-        self.algorithms = [["RC4", True, RC4Algorithm()], ["AES", True, AESAlgorithm()]
-            , ["AES_v1", True, AESAlgorithmV1()]]
+        self.algorithms = [["RC4", True, RC4Algorithm()], ["AES", False, AESAlgorithm()]]
+            #, ["AES_v1", True, AESAlgorithmV1()]]
         self.algorithm = None
         self.TECHNICAL_INFO_LENGTH = 10000
         self.MAX_SIZE = 1024 * 1024 * 1024  # 1 GB in bytes

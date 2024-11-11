@@ -1,10 +1,7 @@
 from hashlib import pbkdf2_hmac
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.backends import default_backend
-
 from encryption_decryption_interface import EncryptionDecryptionInterface
-
-
 import os
 
 

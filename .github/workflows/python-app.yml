@@ -34,7 +34,8 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
     - name: Process new algorithms
-      run: python check_record_new_algorithms.py
+      run: |
+        python check_record_new_algorithms.py
     - name: Test with pytest
       run: |
         pytest regression_test.py
