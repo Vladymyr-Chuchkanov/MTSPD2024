@@ -63,8 +63,8 @@ jobs:
       run: |
         pip install pyinstaller
         pyinstaller --onefile user_interface.py
-    - name: Commit build1
-      id: commit
+    - name: Commit build
+      id: commit2
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "github-actions"
@@ -72,13 +72,13 @@ jobs:
         if [ -z "$(git status --porcelain)" ]; then
            echo "::set-output name=push::false"
         else
-           git commit -m "Add changes" -a
+           git commit -m "Add build" -a
            echo "::set-output name=push::true"
         fi
         shell: bash
 
     - name: Push build
-      if: steps.commit.outputs.push == 'true'
+      if: steps.commit2.outputs.push == 'true'
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
