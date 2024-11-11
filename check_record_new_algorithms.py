@@ -49,6 +49,9 @@ for el in new_algorithms:
     os.makedirs(os.path.dirname(encrypted_file_path), exist_ok=True)
     with open(encrypted_file_path, "wb") as encrypted_file:
         encrypted_file.write(encrypted_data)
+    subprocess.run(["git", "add", encrypted_file_path])
+    subprocess.run(["git", "commit", "-m", f"Added encrypted file {encrypted_file_path}"])
+    subprocess.run(["git", "push", "origin", "master"])
 
 deleted_files = set(subprocess.check_output(
     ["git", "diff", "--name-only", "--diff-filter=D", "HEAD^", "HEAD"], encoding="utf-8").splitlines())
