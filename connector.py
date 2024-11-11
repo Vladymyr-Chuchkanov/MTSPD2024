@@ -1,13 +1,12 @@
-from cryptography.exceptions import InvalidTag
-
-from encryption_decryption_interface import EncryptionDecryptionInterface
-from rc4_algorithm import RC4Algorithm
-from aes_algorithm import AESAlgorithm
+from alorithms.rc4_algorithm import RC4Algorithm
+from alorithms.aes_algorithm import AESAlgorithm
+#from alorithms.aes_algorithm_v1 import AESAlgorithmV1
 
 
 class Connector:
     def __init__(self):
-        self.algorithms = [["RC4", True, RC4Algorithm()], ["AES", True, AESAlgorithm()]]
+        self.algorithms = [["RC4", True, RC4Algorithm()], ["AES", False, AESAlgorithm()]]
+            #, ["AES_v1", True, AESAlgorithmV1()]]
         self.algorithm = None
         self.TECHNICAL_INFO_LENGTH = 10000
         self.MAX_SIZE = 1024 * 1024 * 1024  # 1 GB in bytes
@@ -21,7 +20,8 @@ class Connector:
     def get_algorithms(self):
         lst_algorithms = []
         for el in self.algorithms:
-            lst_algorithms.append(el[0])
+            if el[1]:
+                lst_algorithms.append(el[0])
         return lst_algorithms
 
     def technical_bytes_write(self, s):
@@ -74,9 +74,9 @@ class Connector:
             try:
                 decrypted_bytes = self.algorithm[2].decrypt_bytes(encrypted_keys, file[1][self.TECHNICAL_INFO_LENGTH:], password)
             except Exception as e:
-                errors +="Invalid password\n"
+                errors += str(e) + "\nInvalid password\n"
                 continue
-            decrypted_files.append([new_file_name,decrypted_bytes])
+            decrypted_files.append([new_file_name, decrypted_bytes])
 
         return errors, decrypted_files
 
