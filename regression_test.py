@@ -1,3 +1,4 @@
+import sys
 import unittest
 import string
 import random
@@ -37,6 +38,7 @@ class TestConnectorEncryptionDecryption(unittest.TestCase):
         folder_path = "algorithms_history/"
         files = [f for f in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, f)) and f.endswith(".bin")]
         connector = Connector()
+        sys.stdout.write(f"Files found: {files}\n")
         for file in files:
             file_path = os.path.join(folder_path, file)
             try:
