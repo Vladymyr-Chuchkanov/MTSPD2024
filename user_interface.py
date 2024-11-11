@@ -117,13 +117,13 @@ def start_encryption(temp_data, password):
 
 def check_password():
     password = password_field.get()
-    if password == placeholder_text or password == "":
-        password = ""
+    if password == placeholder_text or password == '':
+        password = ''
     else:
         if not is_strong_password(password):
             info_window.config(
                 text="Password: " + password + " is weak! \nA strong password should be at least 8 characters long and include a mix of uppercase letters, lowercase letters, numbers, and special characters (e.g., @, #, $, %, ^, &, *).")
-            return False
+            return -1
     return password
 
 
@@ -132,16 +132,18 @@ def encrypt_files():
         info_window.config(text="No files selected!")
         return
     password = check_password()
-    if not password:
+    if password == -1:
         return
 
     size, errors, temp_data = conn.check_files(files_data)
-    if len(errors)!=0:
+    if len(errors) != 0:
         info_window.config(text=errors)
 
     algorithm = algorithm_selection.get()
     conn.select_algorithm(algorithm)
 
+    txt = info_window.cget("text")
+    info_window.config(text=txt+"\n encryption is in progress!")
     start_progress_bar(size)
     start_encryption(temp_data, password)
     threading.Thread(target=check_results).start()
@@ -160,7 +162,7 @@ def check_results():
             break
         except queue.Empty:
             time.sleep(1)
-            i+=1
+            i += 1
     print(i)
     files_data.clear()
 
@@ -172,7 +174,8 @@ def decrypt_files():
     password = password_field.get()
     if password == placeholder_text:
         password = ""
-    errors,temp_data = conn.decrypt_files(files_data, password)
+    info_window.config(text="decryption is in progress!")
+    errors, temp_data = conn.decrypt_files(files_data, password)
     files_data.clear()
     if len(errors) != 0:
         info_window.config(text=errors)
