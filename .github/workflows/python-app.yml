@@ -73,7 +73,7 @@ jobs:
            git commit -m "Add build dist" -a
            echo "::set-output name=push::true"
         fi
-        shell: bash
+      shell: bash
 
     - name: Push build
       if: steps.commit3.outputs.push == 'true'
