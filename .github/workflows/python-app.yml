@@ -57,3 +57,7 @@ jobs:
     - name: Test with pytest
       run: |
         pytest regression_test.py
+    - name: Create Executable
+      run: |
+        pip install pyinstaller
+        pyinstaller --onefile your_script.py
