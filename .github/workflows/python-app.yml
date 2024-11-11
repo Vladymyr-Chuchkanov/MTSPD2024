@@ -64,7 +64,7 @@ jobs:
         pip install pyinstaller
         pyinstaller --onefile user_interface.py
     - name: Commit build
-      id: commit2
+      id: commit3
       run: |
         git add --all
         if [ -z "$(git status --porcelain)" ]; then
@@ -76,7 +76,7 @@ jobs:
         shell: bash
 
     - name: Push build
-      if: steps.commit2.outputs.push == 'true'
+      if: steps.commit3.outputs.push == 'true'
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
