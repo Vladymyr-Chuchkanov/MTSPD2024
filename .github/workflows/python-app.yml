@@ -64,7 +64,7 @@ jobs:
         pip install pyinstaller
         pyinstaller --onefile user_interface.py
     - name: Commit build1
-      id: commit2
+      id: commit
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "github-actions"
