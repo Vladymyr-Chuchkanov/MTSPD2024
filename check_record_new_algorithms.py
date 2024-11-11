@@ -12,7 +12,7 @@ algorithms_directory = "algorithms/"
 current_algorithms = [algorithms_directory+f for f in os.listdir(algorithms_directory) if f.endswith(".py")]
 
 last_commit_files = set(subprocess.check_output(
-    ["git", "diff", "--name-only", "HEAD^", "HEAD"], encoding="utf-8").splitlines())
+    ["git", "diff", "--name-only", "HEAD~1", "HEAD"], encoding="utf-8").splitlines())
 
 new_algorithms = set(current_algorithms) & set(last_commit_files)
 conn = Connector()
