@@ -54,13 +54,16 @@ jobs:
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Test with pytest
       run: |
         pytest regression_test.py
+
     - name: Create Executable
       run: |
         pip install pyinstaller
         pyinstaller --onefile user_interface.py
+
     - name: Commit build
       id: commit2
       run: |
@@ -74,6 +77,7 @@ jobs:
              echo "::set-output name=push::true"
           fi
         shell: bash
+
     - name: Push build
       if: steps.commit.outputs.push == 'true'
       uses: ad-m/github-push-action@master
